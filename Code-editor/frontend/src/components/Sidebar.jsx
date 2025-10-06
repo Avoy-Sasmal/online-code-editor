@@ -1,4 +1,4 @@
-import { Copy, LogOut, Users, Code2 } from "lucide-react";
+import { Copy, LogOut, Users, Code2, X } from "lucide-react";
 
 const Sidebar = ({
   roomId,
@@ -10,9 +10,10 @@ const Sidebar = ({
   handleLanguageChange,
   copyRoomId,
   leaveRoom,
+  onClose,
 }) => {
   return (
-    <div className="w-80 bg-slate-900 border-r border-slate-700 p-6 flex flex-col">
+    <div className="w-80 bg-slate-900 border-r border-slate-700 p-6 flex flex-col h-full">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -30,6 +31,15 @@ const Sidebar = ({
             <Copy className="w-5 h-5 text-slate-400 group-hover:text-purple-400" />
           </button>
         </div>
+        {onClose && (
+          <button
+            aria-label="Close sidebar"
+            onClick={onClose}
+            className="lg:hidden absolute top-3 right-3 p-2 rounded-lg hover:bg-slate-800 text-slate-300"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
         {copySuccess && (
           <span className="text-xs text-green-400 bg-green-400/10 px-3 py-1 rounded-full">
             {copySuccess}

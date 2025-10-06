@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const JoinRoom = ({ roomId, setRoomId, userName, setUserName, joinRoom }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-2xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 sm:p-6">
+      <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Code Room</h1>
-          <p className="text-slate-400">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+            Code Room
+          </h1>
+          <p className="text-slate-400 text-sm sm:text-base">
             Join or create a collaborative coding session
           </p>
         </div>
@@ -50,4 +52,4 @@ const JoinRoom = ({ roomId, setRoomId, userName, setUserName, joinRoom }) => {
   );
 };
 
-export default JoinRoom
+export default JoinRoom;

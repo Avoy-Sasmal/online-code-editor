@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 
 const OutputConsole = ({ output, runCode }) => {
   return (
-    <div className="h-64 bg-slate-900 border-t border-slate-700 flex flex-col">
+    <div className="shrink-0 h-64 lg:h-64 md:h-56 sm:h-48 bg-slate-900 border-t border-slate-700 flex flex-col">
       <div className="px-4 py-3 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-slate-300">Output Console</h3>
         <button

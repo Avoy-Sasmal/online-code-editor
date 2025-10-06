@@ -2,7 +2,7 @@ import Editor from "@monaco-editor/react";
 
 const CodeEditor = ({ language, code, handleCodeChange }) => {
   return (
-    <div className="flex-1 bg-slate-950">
+    <div className="flex-1 bg-slate-950 min-h-0">
       <Editor
         height="100%"
         defaultLanguage={language}
