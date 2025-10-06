@@ -1,6 +1,10 @@
 import express from 'express';
 import http from 'http';
 import { Server } from "socket.io";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -56,12 +60,17 @@ socket.on("leaveRoom", () => {
     currentUser = null;
   }
 });
-//typong indicator
+//typing indicator
 
 socket.on("typing",({roomId,userName})=>{
   socket.in(roomId).emit("typing",{userName});
 })
 
+
+//language Change 
+socket.on("language-change",({roomId,language})=>{
+  socket.in(roomId).emit("languageUpdate",language);
+})
 
 socket.on("disconnect",()=>{
   console.log("user disconnected"); 
@@ -69,9 +78,8 @@ socket.on("disconnect",()=>{
     room.get(currentRoom).delete(currentUser);
     io.to(currentRoom).emit("userJoined",Array.from(room.get(currentRoom) ) )
   }})
-
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
 });
-});
-  })
+  });
+  server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });

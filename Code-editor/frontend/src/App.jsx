@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Editor from "@monaco-editor/react";
 
 import "./App.css";
-import { set } from 'mongoose';
 
-const socket = io("http://localhost:5000");
+
+const socket = io("http://localhost:7000");
 
 
 const App = () => {
@@ -14,10 +14,11 @@ const App = () => {
   const [roomId, setRoomId] = useState("");
   const [userName, setUserName] = useState("");
   const [language, setLanguage] = useState("javascript");
-const [code,setCode] = useState("");
+const [code,setCode] = useState("/welcome roomCode");
 const [copySuccess,setCopySuccess] = useState("");
 const [users,setUsers] = useState([]);
 const [typing,setTyping] = useState("");
+
 
 
 useEffect(()=>{
@@ -39,10 +40,15 @@ useEffect(()=>{
     }, 3000);
   })
 
+  socket.on("languageUpdate",(newLanguage)=>{
+    setLanguage(newLanguage);
+  })
+
   return ()=>{
     socket.off("userJoined");
     socket.off("code-update");
     socket.off("typing");
+    socket.off("languageUpdate")
   }
 },[])
 
@@ -63,6 +69,16 @@ const joinRoom = () =>{
   } 
 }
 
+const leaveRoom = () => {
+  socket.emit("leaveRoom");
+  setJoined(false);
+  setRoomId("");
+  setUserName("");
+  setUsers([]);
+  setCode("");
+  setLanguage("javascript");
+}
+
 const copyRoomId = async () => {
   navigator.clipboard.writeText(roomId);
   setCopySuccess("Room Id Copied");
@@ -79,6 +95,12 @@ const handleCodeChange = (newCode) => {
 }
 
   
+const handleLanguageChange = (e) => {
+  const newLanguage = e.target.value;
+  setLanguage(newLanguage);
+  socket.emit("language-change",{roomId,language:newLanguage});
+}
+
   if(!joined){
       return (
         <div>
@@ -117,20 +139,20 @@ const handleCodeChange = (newCode) => {
              <button onClick={copyRoomId}></button>
              {copySuccess && <span className="copy-success">{copySuccess}</span>
               }
-             <h3>users in Room </h3>
+             <h3>{userName} in Room </h3>
              <ul>
 {users.map((user,index)=>(
   <li key={index}>{user}</li>
 ))}
              </ul>
-             <p className="typing-indicator">user is Typing ... </p>
-             <select className="language-selector" value={language} onChange={(e) => setLanguage(e.target.value)}>
+             <p className="typing-indicator">{typing}</p>
+             <select className="language-selector" value={language} onChange={handleLanguageChange}>
                <option value="javascript">JavaScript</option>
                <option value="python">Python</option>
                <option value="java">Java</option>
                <option value="cpp">c++</option>
              </select>
-             <button className="leave-button">Leave Room</button>
+             <button className="leave-button" onClick={leaveRoom}>Leave Room</button>
            </div>
            <div className="editor-wrapper"></div>
            <Editor
