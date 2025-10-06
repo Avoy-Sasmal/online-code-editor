@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import JoinRoom from "./pages/JoinRoom.jsx";
 import EditorRoom from "./pages/EditorRoom.jsx";
-const socket = io("http://localhost:7000");
+const socket = io("https://coderoom-xr0y.onrender.com");
 
 const App = () => {
   const [joined, setJoined] = useState(false);
