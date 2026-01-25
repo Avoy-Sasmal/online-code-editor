@@ -1,10 +1,9 @@
 import express from "express";
 import http from "http";
-import dotenv from "dotenv";
+import dotenv from "dotenv"
+dotenv.config();
 import { Server } from "socket.io";
 import { registerSocketHandlers } from "./routes/socket.js";
-
-dotenv.config();
 
 const app = express();
 app.use(express.json());
